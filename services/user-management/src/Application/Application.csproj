@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Commands\Users\Auth\" />
+  </ItemGroup>
+
 </Project>

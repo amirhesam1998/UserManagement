@@ -17,6 +17,7 @@ namespace Infrastracture.Data.Configurations
             builder.Property(u => u.LastName).HasColumnName("LastName").IsRequired();
             builder.Property(u => u.Password).HasColumnName("Password").IsRequired();
             builder.Property(u => u.CreatedAt).HasColumnName("CreatedAt").IsRequired();
+            //builder.Property(u => u.UpdatedAt).HasColumnName("UpdatedAt").IsRequired();
 
             builder.OwnsOne(u => u.Email, email =>
             {

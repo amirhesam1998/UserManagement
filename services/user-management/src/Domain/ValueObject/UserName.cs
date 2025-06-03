@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 using Shared.ResultManagement;
 
 namespace Domain.ValueObject
@@ -8,6 +9,7 @@ namespace Domain.ValueObject
         private static readonly Regex PhoneRegex = new(@"^\+?[0-9]{10,15}$");
         public string Value { get; private set; }
         private UserName() { }
+        [JsonConstructor]
         private UserName(string value)
         {
             Value = value;

@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Text.Json.Serialization;
+using System.Text.RegularExpressions;
 using Shared.ResultManagement;
 namespace Domain.ValueObject
 {
@@ -9,6 +10,7 @@ namespace Domain.ValueObject
 
         private Email() { }
 
+        [JsonConstructor]
         private Email(string value)
         {
             Value = value;

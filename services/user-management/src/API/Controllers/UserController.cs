@@ -49,9 +49,10 @@ namespace API.Controllers
 
             return NotFound(result.Error);
         }
-        [HttpPut("Edit")]
-        public async Task<IActionResult> EditPermission([FromBody] EditUserCommand command)
+        [HttpPut("Edit/{id}")]
+        public async Task<IActionResult> EditPermission(Guid id ,[FromBody] EditUserCommand command)
         {
+            command.Id = id;
             var result = await _mediator.Send(command);
             if (!result.IsSuccess)
                 return BadRequest(new { Error = result.Error });

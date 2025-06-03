@@ -1,0 +1,43 @@
+############################################
+# مرحلهٔ Build با .NET SDK (مرحله اول)
+############################################
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+
+# ۱) کپی کردن فایل Solution در ریشهٔ /src
+COPY User-Management.sln ./
+
+# ۲) کپی کردن فایل‌های پروژه (*.csproj)  
+#    — دقت کنید که پوشهٔ Infrastracture با این املای خاص وجود دارد
+COPY Shared/Shared.csproj Shared/
+COPY src/API/API.csproj src/API/
+COPY src/Application/Application.csproj src/Application/
+COPY src/Domain/Domain.csproj src/Domain/
+COPY src/Infrastracture/Infrastracture.csproj src/Infrastracture/
+
+# ۳) انجام Restore (به‌خاطر اینکه تنها پروژه‌های csproj را داریم)
+RUN dotnet restore User-Management.sln
+
+# ۴) کپی کردن کل کد پروژه  
+#    (شامل src/API, src/Application, src/Domain, src/Infrastracture و …)
+COPY . .
+
+# ۵) بیلد نهایی (Release)
+RUN dotnet build User-Management.sln -c Release -o /app/build
+
+# ۶) پابلیش Web API  
+#    (هدف ما فقط پروژهٔ API است؛ دستور زیر خروجی را در /app/publish قرار می‌دهد)
+RUN dotnet publish "src/API/API.csproj" -c Release -o /app/publish
+
+
+############################################
+# مرحلهٔ Runtime با ASP.NET Core (مرحله دوم)
+############################################
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+WORKDIR /app
+
+# ۷) کپی کردن خروجی Publish شده از مرحلهٔ build
+COPY --from=build /app/publish .
+
+# ۸) تنظیم ENTRYPOINT برای اجرای Web API
+ENTRYPOINT ["dotnet", "API.dll"]

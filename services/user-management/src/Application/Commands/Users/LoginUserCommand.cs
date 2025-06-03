@@ -2,5 +2,14 @@
 using Shared.ResultManagement;
 namespace Application.Commands.Users
 {
-    public record LoginUserCommand(string Username, string Password) : IRequest<Result<string, string>>;
+    public class LoginUserCommand : IRequest<Result<string, string>>
+    {
+        public string Username { get; set; } = string.Empty;
+        public string Password { get; set; }
+        public LoginUserCommand(string username, string password)
+        {
+            Username = username;
+            Password = password;
+        }
+    }
 }

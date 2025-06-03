@@ -1,4 +1,5 @@
 ﻿
+using System.Threading;
 using Application.Interfaces;
 using Domain.Entities;
 using Domain.ValueObject;
@@ -49,14 +50,23 @@ namespace Infrastracture.Repository
 
         public async Task<bool> ExistsByEmailAsync(Email email)
         {
-            return await _dbContext.Users.AnyAsync(u => u.Email == email);
+            return await _dbContext.Users.AnyAsync(u => u.Email.Value == email.Value);
         }
+
 
         public async Task<bool> ExistsByUsernameAsync(UserName username)
         {
-            return await _dbContext.Users.AnyAsync(u => u.Username == username);
+            return await _dbContext.Users.AnyAsync(u => u.Username.Value == username.Value);
         }
 
-
+        public async Task<User?> GetByIdAsync(Guid id)
+        {
+            return await _dbContext.Users.FindAsync(new object[] { id });
+        }
+        public async Task UpdateAsync(User user)
+        {
+            _dbContext.Users.Update(user);
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }
