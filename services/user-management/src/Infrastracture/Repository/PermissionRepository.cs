@@ -23,7 +23,7 @@ namespace Infrastracture.Repository
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task<Permission?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        public async Task<Permission?> GetByIdAsync(int id, CancellationToken cancellationToken)
         {
             return await _dbContext.Permissions.FindAsync(new object[] { id }, cancellationToken);
         }
@@ -33,7 +33,7 @@ namespace Infrastracture.Repository
             return await _dbContext.Permissions.ToListAsync();
         }
 
-        public async Task<bool> DeletePermissionAsync(Guid id)
+        public async Task<bool> DeletePermissionAsync(int id)
         {
             var permission = await _dbContext.Permissions
                 .FirstOrDefaultAsync(p => p.Id == id);
@@ -64,6 +64,13 @@ namespace Infrastracture.Repository
         public async Task<List<Permission?>> GetPermissionGroupAsync(Permission permission)
         {
             return await _dbContext.Permissions.Where(p => p.PermissionId == permission.Id).ToListAsync();
+        }
+
+        public async Task<List<Permission>?> GetByIdsAsync(List<int> ids, CancellationToken cancellationToken)
+        {
+            return await _dbContext.Permissions
+                .Where(p => ids.Contains(p.Id))
+                .ToListAsync(cancellationToken);
         }
     }
 }

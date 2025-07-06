@@ -5,9 +5,10 @@ namespace Application.Interfaces
     public interface IPermissionRepository
     {
         Task AddAsync(Permission permission, CancellationToken cancellationToken);
-        Task<Permission?> GetByIdAsync(Guid id , CancellationToken cancellationToken);
+        Task<Permission?> GetByIdAsync(int id , CancellationToken cancellationToken);
+        Task<List<Permission>?> GetByIdsAsync(List<int> ids, CancellationToken cancellationToken);
         Task<List<Permission>> GetAllPermissionAsync();
-        Task<bool> DeletePermissionAsync(Guid id);
+        Task<bool> DeletePermissionAsync(int id);
         Task UpdateAsync(Permission permission, CancellationToken cancellationToken);
 
         Task<List<Permission>?> GetPermissionGroupAsync(Permission permission);

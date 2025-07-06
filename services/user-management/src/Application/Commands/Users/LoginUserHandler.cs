@@ -21,7 +21,7 @@ namespace Application.Commands.Users
 
         public async Task<Result<string, string>> Handle(LoginUserCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetByUsernameAsync(request.Username);
+            var user = await _userRepository.GetByUsernameAsync(request.Username, cancellationToken);
 
             if (user is null || !_passwordHasher.Verify(request.Password, user.Password))
                 return Result<string, string>.Failure("Invalid email or password.");

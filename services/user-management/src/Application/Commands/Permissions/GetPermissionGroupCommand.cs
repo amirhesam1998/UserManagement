@@ -6,9 +6,9 @@ namespace Application.Commands.Permissions
 {
     public class GetPermissionGroupCommand : IRequest<Result<List<Permission>? , string>>
     {
-        public Guid Id { get; init; }
+        public int Id { get; init; }
         
-        public GetPermissionGroupCommand(Guid id)
+        public GetPermissionGroupCommand(int id)
         {
             Id = id;
         }

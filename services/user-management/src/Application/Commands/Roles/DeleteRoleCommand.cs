@@ -6,11 +6,11 @@ namespace Application.Commands.Roles
 {
     public class DeleteRoleCommand : IRequest<Result<bool, string>>
     {
-        public string Slug { get; }
+        public int Id { get; }
 
-        public DeleteRoleCommand(string slug)
+        public DeleteRoleCommand(int id)
         {
-            Slug = slug;
+            Id = id;
         }
     }
 }

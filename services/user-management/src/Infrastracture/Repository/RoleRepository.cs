@@ -21,26 +21,26 @@ namespace Infrastracture.Repository
             await _dbContext.SaveChangesAsync(cancellationToken);
         }
 
-        public async Task<bool> ExistSlugAsync(Slug slug)
-        {
-            return await _dbContext.Roles.AnyAsync(s => s.Slug.Value == slug.Value);
-        }
-
         public async Task<List<Role>?> GetAllRolesAsync()
         {
             return await _dbContext.Roles.ToListAsync();
         }
 
-        public async Task<Role> GetBySlugAsync(string slug)
+        public async Task<bool> ExistRoleAsync(string title, CancellationToken cancellationToken)
         {
-            return await _dbContext.Roles.FirstOrDefaultAsync(s => s.Slug.Value == slug);
+            return await _dbContext.Roles.AnyAsync(s => s.Title == title, cancellationToken);
+        }
+
+        public async Task<Role> GetRoleAsync(int? id , CancellationToken cancellationToken)
+        {
+            return await _dbContext.Roles.FirstOrDefaultAsync(s => s.Id == id);
 
         }
 
-        public async Task<bool> DeleteRoleAsync(string slug)
+        public async Task<bool> DeleteRoleAsync(int id , CancellationToken cancellationToken)
         {
             var role = await _dbContext.Roles
-                .FirstOrDefaultAsync(u => u.Slug.Value == slug);
+                .FirstOrDefaultAsync(u => u.Id == id);
 
             if (role is null)
                 return false;
@@ -50,5 +50,12 @@ namespace Infrastracture.Repository
 
             return true;
         }
+
+        public async Task UpdateAsync(Role role, CancellationToken cancellationToken)
+        {
+            _dbContext.Roles.Update(role);
+            await _dbContext.SaveChangesAsync(cancellationToken);
+        }
+
     }
 }

@@ -23,7 +23,7 @@ namespace Infrastracture.Repository
         }
 
 
-        public async Task<User?> GetByUsernameAsync(string username)
+        public async Task<User?> GetByUsernameAsync(string username , CancellationToken cancellationToken)
         {
             return await _dbContext.Users
                 .FirstOrDefaultAsync(u => u.Username.Value == username);

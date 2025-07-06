@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastracture.Migrations
 {
     [DbContext(typeof(UserDbContext))]
-    [Migration("20250521135412_InitialCreate2")]
-    partial class InitialCreate2
+    [Migration("20250705170336_initialCreate")]
+    partial class initialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,9 +27,11 @@ namespace Infrastracture.Migrations
 
             modelBuilder.Entity("Domain.Entities.Permission", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("Active")
                         .ValueGeneratedOnAdd()
@@ -47,8 +49,8 @@ namespace Infrastracture.Migrations
                         .HasColumnType("int")
                         .HasColumnName("Ordering");
 
-                    b.Property<Guid?>("PermissionId")
-                        .HasColumnType("uniqueidentifier")
+                    b.Property<int?>("PermissionId")
+                        .HasColumnType("int")
                         .HasColumnName("PermissionId");
 
                     b.HasKey("Id");
@@ -58,9 +60,11 @@ namespace Infrastracture.Migrations
 
             modelBuilder.Entity("Domain.Entities.Role", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -114,11 +118,11 @@ namespace Infrastracture.Migrations
 
             modelBuilder.Entity("PermissionRole", b =>
                 {
-                    b.Property<Guid>("PermissionsId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("PermissionsId")
+                        .HasColumnType("int");
 
-                    b.Property<Guid>("RolesId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("RolesId")
+                        .HasColumnType("int");
 
                     b.HasKey("PermissionsId", "RolesId");
 
@@ -132,8 +136,8 @@ namespace Infrastracture.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("RoleId")
+                        .HasColumnType("int");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -146,8 +150,8 @@ namespace Infrastracture.Migrations
                 {
                     b.OwnsOne("Domain.ValueObject.PermissionName", "Name", b1 =>
                         {
-                            b1.Property<Guid>("PermissionId")
-                                .HasColumnType("uniqueidentifier");
+                            b1.Property<int>("PermissionId")
+                                .HasColumnType("int");
 
                             b1.Property<string>("Value")
                                 .IsRequired()
@@ -163,30 +167,6 @@ namespace Infrastracture.Migrations
                         });
 
                     b.Navigation("Name")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Domain.Entities.Role", b =>
-                {
-                    b.OwnsOne("Domain.ValueObject.Slug", "Slug", b1 =>
-                        {
-                            b1.Property<Guid>("RoleId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)")
-                                .HasColumnName("Slug");
-
-                            b1.HasKey("RoleId");
-
-                            b1.ToTable("Roles");
-
-                            b1.WithOwner()
-                                .HasForeignKey("RoleId");
-                        });
-
-                    b.Navigation("Slug")
                         .IsRequired();
                 });
 

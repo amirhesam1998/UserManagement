@@ -28,14 +28,14 @@ namespace API.Controllers
         }
 
         [HttpPost("Get/{id}")]
-        public async Task<IActionResult> GetPermission(Guid id)
+        public async Task<IActionResult> GetPermission(int id)
         {
             var permission = await _mediator.Send(new GetPermissionCommand(id));
             return Ok(new { permission });
         }
 
         [HttpPost("GetPermissionGroup/{id}")]
-        public async Task<IActionResult> GetPermissionGroup(Guid id)
+        public async Task<IActionResult> GetPermissionGroup(int id)
         {
             var permissionGroup = await _mediator.Send(new GetPermissionGroupCommand(id));
             return Ok(new { permissionGroup });
@@ -49,7 +49,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("Delete/{id}")]
-        public async Task<IActionResult> DeletePermission(Guid id)
+        public async Task<IActionResult> DeletePermission(int id)
         {
             var result = await _mediator.Send(new DeletePermissionCommand(id));
             if (result.IsSuccess && !result.Value)
@@ -67,5 +67,14 @@ namespace API.Controllers
             return Ok(new { PermissionId = result.Value });
         }
 
+        [HttpPost("SetRolePermissions")]
+        public async Task<IActionResult> SetRolePermissions([FromBody] AssignPermissionsToRoleCommand command)
+        {
+            var result = await _mediator.Send(command);
+            if (!result.IsSuccess)
+                return BadRequest(new { Error = result.Error });
+            return Ok(new { Message = "Assign Permission To Role is set successfully." });
+
+        }
     }
 }

@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  api:
+    image: user-management-api
+    container_name: api_container
+    build:
+      context: .
+      dockerfile: src/API/Dockerfile
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=db,1433;Database=UserDb;User=sa;Password=@Amir764740;TrustServerCertificate=True;
+    networks:
+      - app-network
+
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sql_server_container
+    environment:
+      SA_PASSWORD: "@Amir764740"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
+    networks:
+      - app-network
+
+volumes:
+  sql_data:
+
+networks:
+  app-network:
+    driver: bridge

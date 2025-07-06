@@ -6,7 +6,7 @@ namespace Application.Interfaces
     public interface IUserRepository
     {
         Task AddAsync(User user, CancellationToken cancellationToken);
-        Task<User?> GetByUsernameAsync(string username);
+        Task<User?> GetByUsernameAsync(string username , CancellationToken cancellationToken);
         Task<User?> GetByIdAsync(Guid id);
         Task<List<User>?> GetAllUsersAsync();
         Task<bool> DeleteUserAsync(string username);

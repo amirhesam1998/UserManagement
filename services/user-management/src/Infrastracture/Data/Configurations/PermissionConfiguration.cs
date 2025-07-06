@@ -9,21 +9,12 @@ namespace Infrastracture.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Permission> builder)
         {
-            //builder.HasKey(p => p.Id);
-
-            //builder.OwnsOne(p => p.Name, name =>
-            //{
-            //    name.Property(n => n.Value).HasColumnName("PermissionName").IsRequired();
-            //});
+            
             builder.HasKey(p => p.Id);
 
             builder.Property(p => p.PermissionId)
                 .HasColumnName("PermissionId")
                 .IsRequired(false);
-
-            builder.Property(p => p.Ordering)
-                .HasColumnName("Ordering")
-                .IsRequired();
 
             builder.Property(p => p.Active)
                 .HasColumnName("Active")

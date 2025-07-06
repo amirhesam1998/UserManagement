@@ -13,15 +13,14 @@ namespace Domain.Entities
         public Email Email { get; private set; }
         public string Password { get; private set; }
         public UserName Username { get; private set; }
-        public UserType Type { get; private set; } = UserType.User;
+        public UserType Type { get; private set; }
         public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
         //public DateTime UpdatedAt { get; private set; } = DateTime.UtcNow;
 
-        private readonly List<Role> _roles = new();
-        public IReadOnlyCollection<Role> Roles => _roles;
+        public ICollection<Role> Roles { get; private set; } = new List<Role>();
         protected User() { }
 
-        public User(string firstName, string lastName, Email email, string passwordHash, UserName username , UserType type = UserType.User)
+        public User(string firstName, string lastName, Email email, string passwordHash, UserName username , UserType type)
         {
             Id = Guid.NewGuid();
             var firstNameResult = ValidateName(firstName, "First name");
@@ -106,18 +105,18 @@ namespace Domain.Entities
 
         public void AssignRole(Role role)
         {
-            if (!_roles.Any(r => r.Title == role.Title))
-                _roles.Add(role);
+            if (!Roles.Any(r => r.Title == role.Title))
+                Roles.Add(role);
         }
 
         public void RemoveRole(Role role)
         {
-            _roles.RemoveAll(r => r.Title == role.Title);
+            //Roles.RemoveAll(r => r.Title == role.Title);
         }
 
         public bool HasPermission(PermissionName permission)
         {
-            return _roles
+            return Roles
                 .SelectMany(r => r.Permissions)
                 .Any(p => p.Name == permission);
         }

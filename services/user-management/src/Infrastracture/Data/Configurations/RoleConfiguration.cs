@@ -22,10 +22,7 @@ namespace Infrastracture.Data.Configurations
             //    .IsRequired();
             builder.Property(u => u.Title).HasColumnName("Title").IsRequired();
             builder.Property(u => u.Description).HasColumnName("Description").IsRequired();
-            builder.OwnsOne(u => u.Slug, slug =>
-            {
-                slug.Property(e => e.Value).HasColumnName("Slug").IsRequired();
-            });
+            
             builder.HasMany(r => r.Users)
             .WithMany(u => u.Roles)
             .UsingEntity<Dictionary<string, object>>(

@@ -6,10 +6,12 @@ namespace Application.Interfaces
     public interface IRoleRepository
     {
         Task AddAsync(Role role , CancellationToken cancellationToken);
-        Task<bool> ExistSlugAsync(Slug slug);
+        Task<bool> ExistRoleAsync(string title, CancellationToken cancellationToken);
         Task<List<Role>?> GetAllRolesAsync();
-        Task<Role?> GetBySlugAsync(string slug);
-        Task<bool> DeleteRoleAsync(string slug);
+        Task<Role?> GetRoleAsync(int? id , CancellationToken cancellationToken);
+        Task<bool> DeleteRoleAsync(int id , CancellationToken cancellationToken);
+        Task UpdateAsync(Role role, CancellationToken cancellationToken);
+
 
 
     }

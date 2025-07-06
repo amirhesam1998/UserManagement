@@ -15,7 +15,7 @@ namespace Application.Commands.Users
 
         public async Task<Result<User, string>> Handle(GetUserCommand request, CancellationToken cancellationToken)
         {
-            var user = await _userRepository.GetByUsernameAsync(request.Username);
+            var user = await _userRepository.GetByUsernameAsync(request.Username , cancellationToken);
             if (user is null)
                 return Result<User, string>.Failure("user not found");
 

@@ -7,10 +7,10 @@ namespace Application.Commands.Roles
 {
     public class GetRoleCommand : IRequest<Result<Role,string>>
     {
-        public string Slug { get; }
-        public GetRoleCommand(string slug)
+        public int Id { get; }
+        public GetRoleCommand(int id)
         {
-            Slug = slug;
+            Id = id;
         }
     }
 }

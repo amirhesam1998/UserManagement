@@ -17,7 +17,7 @@ namespace Application.Commands.Roles
 
         public async Task<Result<Role, string>> Handle(GetRoleCommand request, CancellationToken cancellationToken)
         {
-            var role = await _roleRepository.GetBySlugAsync(request.Slug);
+            var role = await _roleRepository.GetRoleAsync(request.Id, cancellationToken);
             if (role is null)
                 return Result<Role, string>.Failure("role not found");
 

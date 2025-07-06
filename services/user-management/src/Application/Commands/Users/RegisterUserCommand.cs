@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using Domain.Entities;
+using Domain.Enums;
+using MediatR;
 using Shared.ResultManagement;
 namespace Application.Commands.Users
 {
@@ -9,14 +11,18 @@ namespace Application.Commands.Users
         public string Email { get; init; }
         public string Password { get; init; }
         public string UserName { get; init; }
+        public UserType UserType { get; init; } = UserType.User;
+        public int? Role { get; init; }
 
-        public RegisterUserCommand(string firstName, string lastName, string email, string password, string username)
-        {
-            FirstName = firstName;
-            LastName = lastName;
-            Email = email;
-            Password = password;
-            UserName = username;
-        }
+        //public RegisterUserCommand(string firstName, string lastName, string email, string password, string username, UserType usertype, int rule)
+        //{
+        //    FirstName = firstName;
+        //    LastName = lastName;
+        //    Email = email;
+        //    Password = password;
+        //    UserName = username;
+        //    UserType = usertype;
+        //    Role = rule;
+        //}
     }
 }

@@ -3,16 +3,14 @@ using Shared.ResultManagement;
 
 namespace Application.Commands.Roles
 {
-    public class AddRoleCommand : IRequest<Result<Guid , string>>
+    public class AddRoleCommand : IRequest<Result<int , string>>
     {
-        public string Title { get; init; }
-        public string? Slug { get; init; }
-        public string Description { get; init; }
+        public string Title { get; }
+        public string Description { get; }
 
-        public AddRoleCommand(string title, string slug, string description)
+        public AddRoleCommand(string title, string description)
         {
             Title = title;
-            Slug = slug;
             Description = description;
         }
 

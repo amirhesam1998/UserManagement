@@ -7,8 +7,8 @@ namespace Application.Commands.Permissions
 {
     public class GetPermissionCommand : IRequest<Result<Permission , string>>
     {
-        public Guid Id { get; init; }
-        public GetPermissionCommand(Guid id)
+        public int Id { get; init; }
+        public GetPermissionCommand(int id)
         {
             Id = id;
         }

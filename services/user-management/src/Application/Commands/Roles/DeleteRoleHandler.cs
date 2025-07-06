@@ -16,7 +16,7 @@ namespace Application.Commands.Roles
 
         public async Task<Result<bool, string>> Handle(DeleteRoleCommand request, CancellationToken cancellationToken)
         {
-            var isDeleted = await _roleRepository.DeleteRoleAsync(request.Slug);
+            var isDeleted = await _roleRepository.DeleteRoleAsync(request.Id , cancellationToken);
 
             if (!isDeleted)
                 return Result<bool, string>.Failure("Role is Deleted");
